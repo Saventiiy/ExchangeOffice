@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ExchangeOffice</string>
+    <string name="main_screen_title_label">Enter your phone number</string>
+    <string name="main_screen_phone_number">+375</string>
+    <string name="main_screen_next_button">Next</string>
+    <string name="input_currency">Input your currency here</string>
+    <string name="output_currency">Your output currency</string>
+</resources>
