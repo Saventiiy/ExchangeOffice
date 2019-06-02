@@ -53,7 +53,6 @@ public class MainScreenFragment extends Fragment {
             }
         } );
 
-
         return v;
     }
 

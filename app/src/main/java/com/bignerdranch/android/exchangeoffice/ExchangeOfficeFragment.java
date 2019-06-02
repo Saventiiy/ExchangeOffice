@@ -1,5 +1,6 @@
 package com.bignerdranch.android.exchangeoffice;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.view.View;
@@ -11,14 +12,23 @@ import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import android.support.v4.app.Fragment;
+import com.bignerdranch.android.exchangeoffice.Parser.Data;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ExchangeOfficeFragment extends Fragment {
 
     private String mCurrency[] = {"usd", "eur", "byn", "ru"};
     private Spinner mInputSpinner;
     private Spinner mOutputSpinner;
+    private EditText mParse;
 
 
     @Override
@@ -32,6 +42,12 @@ public class ExchangeOfficeFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mCurrency);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+
+        mParse = v.findViewById(R.id.parse);
+        new Parse().execute();
+
+
 
         mInputSpinner = v.findViewById(R.id.exchange_office_input_currency_spinner);
         mInputSpinner.setAdapter(adapter);
@@ -69,9 +85,43 @@ public class ExchangeOfficeFragment extends Fragment {
             }
         });
 
-
         return v;
     }
 
+    class Parse extends AsyncTask<Void, Data, Void> {
+        private  String link = "http://www.nbrb.by/API/ExRates/Rates?Periodicity=0";
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            URL url = null;
+            try {
+                url = new URL(link);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            InputStreamReader reader = null;
+            try {
+                reader = new InputStreamReader(url.openStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            publishProgress(new Gson().fromJson(reader, Data[].class));
+            //return new Gson().fromJson(reader, Data[].class);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Data... values) {
+            super.onProgressUpdate(values);
+
+            mParse.setText(values[0].toString());
+
+        }
+
+
+
+
+    }
 
 }
