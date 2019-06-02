@@ -1,5 +1,7 @@
 package com.bignerdranch.android.exchangeoffice.Parser;
 
+import android.arch.persistence.room.Entity;
+
 public class Data {
 
     private int Cur_ID;
