@@ -1,0 +1,61 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ed3a6e8c0ed5d2ddc976c3e91bd1f10a",
+    "entities": [
+      {
+        "tableName": "Data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Cur_ID` INTEGER NOT NULL, `Date` TEXT, `Cur_Abbreviation` TEXT, `Cur_Scale` INTEGER NOT NULL, `Cur_Name` TEXT, `Cur_OfficialRate` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "Cur_ID",
+            "columnName": "Cur_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Date",
+            "columnName": "Date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Cur_Abbreviation",
+            "columnName": "Cur_Abbreviation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Cur_Scale",
+            "columnName": "Cur_Scale",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Cur_Name",
+            "columnName": "Cur_Name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Cur_OfficialRate",
+            "columnName": "Cur_OfficialRate",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ed3a6e8c0ed5d2ddc976c3e91bd1f10a\")"
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.exchangeoffice;
 
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -18,8 +19,11 @@ import android.content.Intent;
 
 public class MainScreenFragment extends Fragment {
 
+    private static final String PHONE_NUMBER = "com.bignerdranch.android.exchangeoffice.phone_number";
+
     private EditText mPhoneEditText;
     private Button mNextButton;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -41,10 +45,12 @@ public class MainScreenFragment extends Fragment {
             public void onClick(View v){
 
                 if(mPhoneEditText.getText().toString().matches("[+0-9]\\d{12}")){
-                    Intent intent = new Intent(getContext(), ExchangeOfficeActitvity.class);
-                    startActivity(intent);
+                    Intent activityIntent = new Intent(getContext(), ExchangeOfficeActitvity.class);
+                    startActivity(activityIntent);
 
                     mPhoneEditText.getText().clear();
+                    Intent phoneIntent = new Intent(getContext(), ExchangeOfficeActitvity.class);
+                    phoneIntent.putExtra(PHONE_NUMBER, mPhoneEditText.getText().toString());
                 }
                 else{
                     Toast.makeText(getContext(), "Incorrect phone number", Toast.LENGTH_SHORT).show();
