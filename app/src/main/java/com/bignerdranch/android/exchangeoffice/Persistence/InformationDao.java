@@ -22,6 +22,6 @@ public interface InformationDao {
     List<String> getName();
 
     @Query("SELECT rate FROM information")
-    List<Rate> getRate();
+    List<Double> getRate();
 
 }

@@ -3,6 +3,7 @@ package com.bignerdranch.android.exchangeoffice.Parser;
 import android.os.AsyncTask;
 
 
+import com.bignerdranch.android.exchangeoffice.ExchangeOfficeFragment;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -10,13 +11,12 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Parser extends AsyncTask<Void, Void, Void> {
+public class Parser extends AsyncTask<Void, Data[], Data[]> {
 
     private String link = "http://www.nbrb.by/API/ExRates/Rates?Periodicity=0";
 
-
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Data[] doInBackground(Void... voids) {
         URL url = null;
         try {
             url = new URL(link);
@@ -28,16 +28,18 @@ public class Parser extends AsyncTask<Void, Void, Void> {
             reader = new InputStreamReader(url.openStream());
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
-        new Gson().fromJson(reader, Data[].class);
-        return null;
+        return new Gson().fromJson(reader, Data[].class);
     }
 
     @Override
-    protected void onPostExecute(Void data){
-
+    protected void onPostExecute(Data... data){
+        new ExchangeOfficeFragment().data(data);
     }
+
+
 
 
 //

@@ -28,9 +28,8 @@ public class Information {
     private double rate;
 
 
-    Information(int id, String date, String abbreviation, int quantity, String name, double rate){
+    Information(String date, String abbreviation, int quantity, String name, double rate){
 
-        this.id = id;
         this.date = date;
         this.abbreviation = abbreviation;
         this.quantity = quantity;

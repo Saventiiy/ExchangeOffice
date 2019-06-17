@@ -17,7 +17,9 @@ public abstract class InformationDatabase extends RoomDatabase {
 
     static InformationDatabase getInstance(final Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), InformationDatabase.class, DATABASE_NAME).allowMainThreadQueries().fallbackToDestructiveMigration().build(); //.allowMainThreadQueries()
+            instance =
+                    Room.databaseBuilder(context.getApplicationContext(), InformationDatabase.class, DATABASE_NAME)
+                            .allowMainThreadQueries().fallbackToDestructiveMigration().build(); //.allowMainThreadQueries()
         }
 
         return instance;

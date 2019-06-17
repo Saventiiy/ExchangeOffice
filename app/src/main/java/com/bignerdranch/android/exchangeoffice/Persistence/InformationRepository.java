@@ -18,11 +18,11 @@ public class InformationRepository {
         mInformationDatabase = InformationDatabase.getInstance(context);
     }
 
-    public void insertInforamtion(Information information){
+    public void insertInformation(Information information){
         new InsertAsyncTask(mInformationDatabase.getInformationDao()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, information);
     }
 
-    public List<Rate> getRate(){
+    public List<Double> getRate(){
         return mInformationDatabase.getInformationDao().getRate();
     }
 }
