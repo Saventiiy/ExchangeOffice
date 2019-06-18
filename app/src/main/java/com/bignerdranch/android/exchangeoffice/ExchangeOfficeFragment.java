@@ -31,6 +31,7 @@ public class ExchangeOfficeFragment extends Fragment {
     public Data[] data;
 
     private InformationRepository mInformationRepository;
+    private Information mInformation;
 
 
 
@@ -43,23 +44,44 @@ public class ExchangeOfficeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.exchange_office_fragment, container, false);
         mParse = v.findViewById(R.id.parse);
+        mInformationRepository = new InformationRepository(this.getContext());
 
         try {
             data = new Parser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get();
-            showData(data);
-        }
 
+
+            for(int i = 0; i != data.length; ++i){
+                mInformation = new Information(data[i].getDate(),
+                                               data[i].getCur_Abbreviation(),
+                                               data[i].getCur_Scale(),
+                                               data[i].getCur_Name(),
+                                               data[i].getCur_OfficialRate());
+
+                mInformationRepository.insert(mInformation);
+
+
+            }
+
+            List<String> names = mInformationRepository.getName();
+
+            Toast.makeText(getContext(), names.get(24), Toast.LENGTH_SHORT).show();
+
+
+            //showData(data);
+
+        }
         catch (Exception e) {
         }
 
 
-        mInformationRepository = new InformationRepository(this.getContext());
-        Information information = new Information("123124", "hui", 3, "e3adf", 3.43);
-        mInformationRepository.insert(information);
+//
+//        Information information = new Information("123124", "hui", 3, "asdf", 3.43);
+//        mInformationRepository.insert(information);
 
-        List<String> names = mInformationRepository.getName();
 
-        Toast.makeText(getContext(), names.get(0), Toast.LENGTH_LONG).show();
+
+
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mCurrency);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -76,7 +98,7 @@ public class ExchangeOfficeFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -94,7 +116,7 @@ public class ExchangeOfficeFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -111,5 +133,5 @@ public class ExchangeOfficeFragment extends Fragment {
         mParse.setText(data[24].toString());
     }
 
-    
+
 }
