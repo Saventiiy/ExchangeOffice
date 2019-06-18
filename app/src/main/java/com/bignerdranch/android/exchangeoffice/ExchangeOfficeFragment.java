@@ -44,35 +44,37 @@ public class ExchangeOfficeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.exchange_office_fragment, container, false);
         mParse = v.findViewById(R.id.parse);
+
         mInformationRepository = new InformationRepository(this.getContext());
 
-        try {
-            data = new Parser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get();
+        List<String> names = mInformationRepository.getName();
+        Toast.makeText(getContext(), names.get(24), Toast.LENGTH_SHORT).show();
 
-
-            for(int i = 0; i != data.length; ++i){
-                mInformation = new Information(data[i].getDate(),
-                                               data[i].getCur_Abbreviation(),
-                                               data[i].getCur_Scale(),
-                                               data[i].getCur_Name(),
-                                               data[i].getCur_OfficialRate());
-
-                mInformationRepository.insert(mInformation);
-
-
-            }
-
-            List<String> names = mInformationRepository.getName();
-
-            Toast.makeText(getContext(), names.get(24), Toast.LENGTH_SHORT).show();
-
-
-            //showData(data);
-
-        }
-        catch (Exception e) {
-        }
-
+//        try {
+//            data = new Parser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get();
+//
+//
+//            for(int i = 0; i != data.length; ++i){
+//                mInformation = new Information(data[i].getDate(),
+//                                               data[i].getCur_Abbreviation(),
+//                                               data[i].getCur_Scale(),
+//                                               data[i].getCur_Name(),
+//                                               data[i].getCur_OfficialRate());
+//
+//                mInformationRepository.insert(mInformation);
+//
+//
+//            }
+//
+//
+//
+//
+//            //showData(data);
+//
+//        }
+//        catch (Exception e) {
+//        }
+//
 
 //
 //        Information information = new Information("123124", "hui", 3, "asdf", 3.43);

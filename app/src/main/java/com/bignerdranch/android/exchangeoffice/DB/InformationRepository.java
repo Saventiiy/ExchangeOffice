@@ -16,9 +16,9 @@ public class InformationRepository {
         mInformationDAO = db.informationDAO();
     }
 
-    public void insert(Information information){
-        new InsertAsyncTask(mInformationDAO).execute(information);
-    }
+//    public void insert(Information information){
+//        new InsertAsyncTask(mInformationDAO).execute(information);
+//    }
 
 
     public List<String> getName(){
@@ -28,22 +28,22 @@ public class InformationRepository {
 
 
 
-    private static class InsertAsyncTask extends AsyncTask<Information, Void, Void>{
-
-
-        private InformationDAO mAsyncTaskDAO;
-
-        InsertAsyncTask(InformationDAO dao){
-            mAsyncTaskDAO = dao;
-        }
-
-
-        @Override
-        protected Void doInBackground(final Information... params){
-            mAsyncTaskDAO.insert(params[0]);
-            return null;
-        }
-    }
+//    private static class InsertAsyncTask extends AsyncTask<Information, Void, Void>{
+//
+//
+//        private InformationDAO mAsyncTaskDAO;
+//
+//        InsertAsyncTask(InformationDAO dao){
+//            mAsyncTaskDAO = dao;
+//        }
+//
+//
+//        @Override
+//        protected Void doInBackground(final Information... params){
+//            mAsyncTaskDAO.insert(params[0]);
+//            return null;
+//        }
+//    }
 
 
 }
