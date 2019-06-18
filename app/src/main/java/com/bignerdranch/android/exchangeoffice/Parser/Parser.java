@@ -3,7 +3,6 @@ package com.bignerdranch.android.exchangeoffice.Parser;
 import android.os.AsyncTask;
 
 
-import com.bignerdranch.android.exchangeoffice.ExchangeOfficeFragment;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -28,7 +27,6 @@ public class Parser extends AsyncTask<Void, Data[], Data[]> {
             reader = new InputStreamReader(url.openStream());
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
         return new Gson().fromJson(reader, Data[].class);
@@ -36,7 +34,6 @@ public class Parser extends AsyncTask<Void, Data[], Data[]> {
 
     @Override
     protected void onPostExecute(Data... data){
-        new ExchangeOfficeFragment().data(data);
     }
 
 

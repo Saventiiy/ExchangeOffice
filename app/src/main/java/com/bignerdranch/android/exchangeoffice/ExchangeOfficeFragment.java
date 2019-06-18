@@ -15,15 +15,12 @@ import android.widget.Toast;
 import android.widget.EditText;
 
 import android.support.v4.app.Fragment;
+import com.bignerdranch.android.exchangeoffice.DB.Information;
+import com.bignerdranch.android.exchangeoffice.DB.InformationRepository;
 import com.bignerdranch.android.exchangeoffice.Parser.Data;
 import com.bignerdranch.android.exchangeoffice.Parser.Parser;
 
-import com.bignerdranch.android.exchangeoffice.Persistence.Information;
-
 import java.util.List;
-
-
-import com.bignerdranch.android.exchangeoffice.Persistence.InformationRepository;
 
 public class ExchangeOfficeFragment extends Fragment {
 
@@ -31,12 +28,11 @@ public class ExchangeOfficeFragment extends Fragment {
     private Spinner mInputSpinner;
     private Spinner mOutputSpinner;
     public EditText mParse;
-
-    //private Data[] mData;
+    public Data[] data;
 
     private InformationRepository mInformationRepository;
-    private Information mInformation1;
-    private Information mInformation2;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,20 +42,29 @@ public class ExchangeOfficeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.exchange_office_fragment, container, false);
+        mParse = v.findViewById(R.id.parse);
 
         try {
-            new Parser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        } catch (Exception e) {
+            data = new Parser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get();
+            showData(data);
         }
 
-        information();
+        catch (Exception e) {
+        }
 
+
+        mInformationRepository = new InformationRepository(this.getContext());
+        Information information = new Information("123124", "hui", 3, "e3adf", 3.43);
+        mInformationRepository.insert(information);
+
+        List<String> names = mInformationRepository.getName();
+
+        Toast.makeText(getContext(), names.get(0), Toast.LENGTH_LONG).show();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, mCurrency);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
 
-        mParse = v.findViewById(R.id.parse);
 
 
         mInputSpinner = v.findViewById(R.id.exchange_office_input_currency_spinner);
@@ -102,35 +107,9 @@ public class ExchangeOfficeFragment extends Fragment {
     }
 
 
-    public void data(Data[] data) {
-        //mInformation1.setRate(data[0].ge);
+    public void showData(Data... data) {
+        mParse.setText(data[24].toString());
     }
 
-
-    public void information() {
-
-        mInformationRepository = new InformationRepository(this.getContext());
-        List<Double> arr = mInformationRepository.getRate();
-
-        try {
-            mInformation1.setAbbreviation("d");
-            mInformation1.setDate("23");
-            mInformation1.setName("asd");
-            mInformation1.setQuantity(2);
-            mInformation1.setRate(8.0);
-
-            mInformation2.setAbbreviation("d");
-            mInformation2.setDate("23");
-            mInformation2.setName("asd");
-            mInformation2.setQuantity(2);
-            mInformation2.setRate(3.12);
-        } catch (Exception e) {
-
-        }
-
-        mInformationRepository.insertInformation(mInformation1);
-        mInformationRepository.insertInformation(mInformation2);
-    }
-
-
+    
 }
